@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Dashboard | ServiceGrow</title>
+</head>
+<body style="background:#080b12;color:white;font-family:Arial;padding:50px;">
+    <h1 style="color:#ff963d;">ServiceGrow Business Dashboard</h1>
+    <p>Welcome, Business Owner! Your login is working successfully.</p>
+    <button onclick="logout()">Logout</button>
+
+    <script>
+        const token = sessionStorage.getItem("servicegrow_token");
+        const user = JSON.parse(sessionStorage.getItem("servicegrow_user") || "null");
+
+        if (!token || !user || user.role !== "business_owner") {
+            window.location.href = "login.html";
+        }
+
+        function logout() {
+            sessionStorage.removeItem("servicegrow_token");
+            sessionStorage.removeItem("servicegrow_user");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>

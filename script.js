@@ -1,500 +1,254 @@
 
 /* =========================================
-   SERVICEGROW - JAVASCRIPT
-   Animations, Navigation & Interactions
+   SERVICEGROW - ANIMATED JAVASCRIPT
 ========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
-    // =====================================
     // MOBILE NAVIGATION
-    // =====================================
-
     const menuToggle = document.getElementById("menuToggle");
     const navLinks = document.getElementById("navLinks");
 
     if (menuToggle && navLinks) {
-
-        menuToggle.addEventListener("click", () => {
-
-            const isOpen = navLinks.classList.toggle("open");
-
-            menuToggle.setAttribute("aria-expanded", String(isOpen));
-            menuToggle.setAttribute(
-                "aria-label",
-                isOpen ? "Close navigation" : "Open navigation"
-            );
-
+        menuToggle.addEventListener("click", function () {
+            const isOpen = navLinks.classList.toggle("show");
+            menuToggle.setAttribute("aria-expanded", isOpen);
         });
 
-        navLinks.querySelectorAll("a").forEach(link => {
-
-            link.addEventListener("click", () => {
-
-                navLinks.classList.remove("open");
-
+        navLinks.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("show");
                 menuToggle.setAttribute("aria-expanded", "false");
-                menuToggle.setAttribute("aria-label", "Open navigation");
-
             });
-
         });
-
-        document.addEventListener("click", event => {
-
-            if (
-                !navLinks.contains(event.target) &&
-                !menuToggle.contains(event.target)
-            ) {
-                navLinks.classList.remove("open");
-                menuToggle.setAttribute("aria-expanded", "false");
-            }
-
-        });
-
     }
 
-
-    // =====================================
-    // HERO ENTRANCE ANIMATION
-    // =====================================
-
-    const heroContent = document.querySelector(".hero-content");
-
-    if (heroContent) {
-
-        const heroElements = heroContent.querySelectorAll(
-            ".eyebrow, h1, .hero-description, .hero-buttons, .hero-highlights"
-        );
-
-        heroElements.forEach((element, index) => {
-
-            element.style.opacity = "0";
-            element.style.transform = "translateY(25px)";
-
-            element.animate(
-                [
-                    {
-                        opacity: 0,
-                        transform: "translateY(25px)"
-                    },
-                    {
-                        opacity: 1,
-                        transform: "translateY(0)"
-                    }
-                ],
-                {
-                    duration: 800,
-                    delay: 150 + index * 160,
-                    easing: "cubic-bezier(.2,.7,.2,1)",
-                    fill: "forwards"
-                }
-            );
-
-        });
-
-    }
-
-
-    // =====================================
-    // MOUSE FOLLOWING ORANGE GLOW
-    // AND THREE-LINE MOUSE TRAIL
-    // =====================================
-
-    const hero = document.querySelector(".hero");
-    const mouseTrail = document.querySelector(".mouse-trail");
-
-    if (
-        hero &&
-        mouseTrail &&
-        window.matchMedia("(hover: hover) and (pointer: fine)").matches
-    ) {
-
-        // Create the orange glow
-        const mouseLight = document.createElement("div");
-
-        mouseLight.className = "hero-mouse-light";
-
-        hero.appendChild(mouseLight);
-
-        const trailLines = mouseTrail.querySelectorAll("span");
-
-        // Three different trail positions
-        const trailPositions = [
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 }
-        ];
-
-        let mouseX = 0;
-        let mouseY = 0;
-
-        let animationFrame = null;
-
-        function animateMouseTrail() {
-
-            trailPositions.forEach((position, index) => {
-
-                const speed = 0.22 - (index * 0.045);
-
-                position.x += (mouseX - position.x) * speed;
-                position.y += (mouseY - position.y) * speed;
-
-                const line = trailLines[index];
-
-                if (line) {
-
-                    line.style.left = `${position.x}px`;
-                    line.style.top = `${position.y}px`;
-
-                }
-
-            });
-
-            animationFrame = requestAnimationFrame(animateMouseTrail);
-
-        }
-
-        hero.addEventListener("mouseenter", event => {
-
-            const rect = hero.getBoundingClientRect();
-
-            mouseX = event.clientX - rect.left;
-            mouseY = event.clientY - rect.top;
-
-            trailPositions.forEach(position => {
-                position.x = mouseX;
-                position.y = mouseY;
-            });
-
-            hero.classList.add("mouse-active");
-
-            if (!animationFrame) {
-                animateMouseTrail();
-            }
-
-        });
-
-        hero.addEventListener("mousemove", event => {
-
-            const rect = hero.getBoundingClientRect();
-
-            mouseX = event.clientX - rect.left;
-            mouseY = event.clientY - rect.top;
-
-            // Move the orange glow
-            mouseLight.style.left = `${mouseX}px`;
-            mouseLight.style.top = `${mouseY}px`;
-
-            // Move the three-line trail
-            mouseTrail.style.left = "0";
-            mouseTrail.style.top = "0";
-
-        });
-
-        hero.addEventListener("mouseleave", () => {
-
-            hero.classList.remove("mouse-active");
-
-        });
-
-    }
-
-
-    // =====================================
-    // SCROLL REVEAL ANIMATIONS
-    // =====================================
-
-    const revealTargets = document.querySelectorAll(
-        ".section-heading, .service-card, .industry-card, .about-content, .about-visual, .pricing-card, .demo-content, .form-card, .contact-info, .contact-form"
-    );
-
-    revealTargets.forEach(element => {
-        element.classList.add("reveal");
-    });
-
-    if ("IntersectionObserver" in window) {
-
-        const revealObserver = new IntersectionObserver(
-            (entries, observer) => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add("visible");
-
-                        observer.unobserve(entry.target);
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.12
-            }
-        );
-
-        revealTargets.forEach(element => {
-            revealObserver.observe(element);
-        });
-
-    } else {
-
-        revealTargets.forEach(element => {
-            element.classList.add("visible");
-        });
-
-    }
-
-
-    // =====================================
-    // HOW IT WORKS - SEQUENTIAL ANIMATION
-    // =====================================
-
-    const howSection = document.querySelector(".how-section");
-
-    if (howSection && "IntersectionObserver" in window) {
-
-        const howObserver = new IntersectionObserver(
-            (entries, observer) => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        howSection.classList.add("process-visible");
-
-                        observer.unobserve(entry.target);
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.25
-            }
-        );
-
-        howObserver.observe(howSection);
-
-    } else if (howSection) {
-
-        howSection.classList.add("process-visible");
-
-    }
-
-
-    // =====================================
-    // ACTIVE NAVIGATION LINK
-    // =====================================
-
-    const navLinksList = document.querySelectorAll(
-        '.nav-links a[href^="#"]'
-    );
-
-    const pageSections = [...navLinksList]
-        .map(link => {
-            return document.querySelector(link.getAttribute("href"));
-        })
-        .filter(Boolean);
-
-    if ("IntersectionObserver" in window) {
-
-        const sectionObserver = new IntersectionObserver(
-            entries => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        navLinksList.forEach(link => {
-
-                            link.classList.toggle(
-                                "active",
-                                link.getAttribute("href") === `#${entry.target.id}`
-                            );
-
-                        });
-
-                    }
-
-                });
-
-            },
-            {
-                rootMargin: "-35% 0px -55% 0px"
-            }
-        );
-
-        pageSections.forEach(section => {
-            sectionObserver.observe(section);
-        });
-
-    }
-
-
-    // =====================================
-    // BACK TO TOP BUTTON
-    // =====================================
-
-    const backToTop = document.getElementById("backToTop");
-
-    if (backToTop) {
-
-        window.addEventListener("scroll", () => {
-
-            backToTop.classList.toggle(
-                "show",
-                window.scrollY > 450
-            );
-
-        });
-
-        backToTop.addEventListener("click", () => {
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        });
-
-    }
-
-
-    // =====================================
-    // DEMO FORM
-    // FRONTEND VALIDATION ONLY
-    // =====================================
-
-    const demoForm = document.getElementById("demoForm");
-    const demoStatus = document.getElementById("demoStatus");
-
-    if (demoForm) {
-
-        demoForm.addEventListener("submit", event => {
-
-            event.preventDefault();
-
-            if (!demoForm.checkValidity()) {
-
-                demoForm.reportValidity();
-                return;
-
-            }
-
-            if (demoStatus) {
-
-                demoStatus.textContent =
-                    "Thank you! Your details are valid. This form is not connected to a server yet, so your information has not been sent.";
-
-            }
-
-            demoForm.reset();
-
-        });
-
-    }
-
-
-    // =====================================
-    // CONTACT FORM
-    // FRONTEND VALIDATION ONLY
-    // =====================================
-
-    const contactForm = document.getElementById("contactForm");
-    const contactStatus = document.getElementById("contactStatus");
-
-    if (contactForm) {
-
-        contactForm.addEventListener("submit", event => {
-
-            event.preventDefault();
-
-            if (!contactForm.checkValidity()) {
-
-                contactForm.reportValidity();
-                return;
-
-            }
-
-            if (contactStatus) {
-
-                contactStatus.textContent =
-                    "Thank you for contacting us! This form is not connected to email or a database yet, so your message has not been sent.";
-
-            }
-
-            contactForm.reset();
-
-        });
-
-    }
-
-
-    // =====================================
-    // AUTOMATIC COPYRIGHT YEAR
-    // =====================================
-
+    // FOOTER YEAR
     const copyrightYear = document.getElementById("copyrightYear");
-
     if (copyrightYear) {
-
         copyrightYear.textContent = new Date().getFullYear();
-
     }
 
-
-    // =====================================
-    // SERVICE CARD STAGGER EFFECT
-    // =====================================
-
-    const cardGroups = [
+    // SCROLL REVEAL WITH STAGGERED ANIMATION
+    const revealGroups = [
         ".services-grid",
+        ".steps-grid",
         ".industries-grid",
         ".pricing-grid"
     ];
 
-    cardGroups.forEach(groupSelector => {
-
-        const group = document.querySelector(groupSelector);
-
-        if (!group) return;
-
-        const cards = group.querySelectorAll(
-            ".service-card, .industry-card, .pricing-card"
-        );
-
-        cards.forEach((card, index) => {
-
-            card.style.transitionDelay = `${(index % 3) * 100}ms`;
-
+    revealGroups.forEach(function (selector) {
+        document.querySelectorAll(selector).forEach(function (group) {
+            Array.from(group.children).forEach(function (item, index) {
+                item.classList.add("reveal");
+                item.style.setProperty("--reveal-delay", (index * 100) + "ms");
+            });
         });
-
     });
 
+    const revealElements = document.querySelectorAll(".reveal");
 
-    // =====================================
-    // BUTTON CLICK FEEDBACK
-    // =====================================
-
-    document.querySelectorAll(".btn, .nav-button").forEach(button => {
-
-        button.addEventListener("mousedown", () => {
-            button.style.transform = "scale(0.97)";
+    if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: "0px 0px -35px 0px"
         });
 
-        button.addEventListener("mouseup", () => {
-            button.style.transform = "";
+        revealElements.forEach(function (element) {
+            observer.observe(element);
+        });
+    } else {
+        revealElements.forEach(function (element) {
+            element.classList.add("visible");
+        });
+    }
+
+    // BACK TO TOP
+    const backToTop = document.getElementById("backToTop");
+
+    if (backToTop) {
+        window.addEventListener("scroll", function () {
+            backToTop.classList.toggle("show", window.scrollY > 400);
         });
 
-        button.addEventListener("mouseleave", () => {
-            button.style.transform = "";
+        backToTop.addEventListener("click", function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    }
+
+    // ACTIVE NAVIGATION LINK
+    const sections = document.querySelectorAll("main section[id]");
+    const navItems = document.querySelectorAll(".nav-links a");
+
+    function updateActiveLink() {
+        let currentSection = "";
+
+        sections.forEach(function (section) {
+            if (window.scrollY >= section.offsetTop - 150) {
+                currentSection = section.id;
+            }
         });
 
+        navItems.forEach(function (link) {
+            link.classList.toggle(
+                "active",
+                link.getAttribute("href") === "#" + currentSection
+            );
+        });
+    }
+
+    window.addEventListener("scroll", updateActiveLink);
+    updateActiveLink();
+
+    // HERO MOUSE GLOW
+    const hero = document.querySelector(".hero");
+
+    if (hero && window.matchMedia("(pointer: fine)").matches) {
+        hero.addEventListener("mousemove", function (event) {
+            const rect = hero.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            hero.style.setProperty("--mouse-x", x + "px");
+            hero.style.setProperty("--mouse-y", y + "px");
+        });
+    }
+
+    // DASHBOARD PARALLAX
+    const heroVisual = document.querySelector(".hero-visual");
+    const dashboard = document.querySelector(".dashboard-card");
+
+    if (heroVisual && dashboard && window.matchMedia("(pointer: fine)").matches) {
+        heroVisual.addEventListener("mousemove", function (event) {
+            const rect = heroVisual.getBoundingClientRect();
+
+            const x = (event.clientX - rect.left) / rect.width - 0.5;
+            const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+            dashboard.style.transform =
+                "rotateY(" + (-5 + x * 8) + "deg) rotateX(" + (2 - y * 5) + "deg)";
+        });
+
+        heroVisual.addEventListener("mouseleave", function () {
+            dashboard.style.transform = "";
+        });
+    }
+
+    // CHART ANIMATION
+    const chartPath = document.querySelector(".chart svg path:nth-of-type(2)");
+
+    if (chartPath) {
+        const length = chartPath.getTotalLength();
+
+        chartPath.style.strokeDasharray = length;
+        chartPath.style.strokeDashoffset = length;
+
+        if ("IntersectionObserver" in window) {
+            const chartObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        chartPath.classList.add("chart-draw");
+                        chartObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.4 });
+
+            chartObserver.observe(chartPath);
+        } else {
+            chartPath.classList.add("chart-draw");
+        }
+    }
+
+    // DEMO FORM VALIDATION
+    const demoForm = document.getElementById("demoForm");
+    const demoStatus = document.getElementById("demoStatus");
+
+    if (demoForm) {
+        demoForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (!demoForm.checkValidity()) {
+                demoForm.reportValidity();
+                return;
+            }
+
+            const formData = {
+                name: document.getElementById("demoName").value.trim(),
+                email: document.getElementById("demoEmail").value.trim(),
+                business: document.getElementById("demoBusiness").value.trim(),
+                industry: document.getElementById("demoIndustry").value,
+                country: document.getElementById("demoCountry").value,
+                monthlyCustomers: document.getElementById("monthlyCustomers").value,
+                message: document.getElementById("demoMessage").value.trim()
+            };
+
+            console.log("Demo Form Data:", formData);
+
+            showMessage(
+                demoStatus,
+                "Form validated successfully. Backend connection is not configured yet.",
+                "success"
+            );
+        });
+    }
+
+    // CONTACT FORM VALIDATION
+    const contactForm = document.getElementById("contactForm");
+    const contactStatus = document.getElementById("contactStatus");
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (!contactForm.checkValidity()) {
+                contactForm.reportValidity();
+                return;
+            }
+
+            const contactData = {
+                name: document.getElementById("contactName").value.trim(),
+                email: document.getElementById("contactEmail").value.trim(),
+                subject: document.getElementById("contactSubject").value.trim(),
+                message: document.getElementById("contactMessage").value.trim()
+            };
+
+            console.log("Contact Form Data:", contactData);
+
+            showMessage(
+                contactStatus,
+                "Form validated successfully. Backend connection is not configured yet.",
+                "success"
+            );
+        });
+    }
+
+    // COMMON FORM MESSAGE
+    function showMessage(element, message, type) {
+        if (!element) return;
+
+        element.textContent = message;
+        element.style.color =
+            type === "success" ? "#36d399" : "#ff6464";
+    }
+
+    // REMOVE EXTRA SPACES FROM INPUTS
+    document.querySelectorAll(
+        "input[type='text'], input[type='email'], textarea"
+    ).forEach(function (input) {
+        input.addEventListener("blur", function () {
+            input.value = input.value.trim();
+        });
     });
 
+    console.log("ServiceGrow animations and JavaScript loaded!");
 });
