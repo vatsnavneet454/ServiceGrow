@@ -5,25 +5,432 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | ServiceGrow</title>
+
+    <link rel="stylesheet" href="admin-dashboard.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body style="background:#080b12;color:white;font-family:Arial;padding:50px;">
-    <h1 style="color:#ff963d;">ServiceGrow Admin Dashboard</h1>
-    <p>Welcome, Admin! Your login is working successfully.</p>
-    <button onclick="logout()">Logout</button>
 
-    <script>
-        const token = sessionStorage.getItem("servicegrow_token");
-        const user = JSON.parse(sessionStorage.getItem("servicegrow_user") || "null");
+<body>
 
-        if (!token || !user || user.role !== "admin") {
-            window.location.href = "login.html";
-        }
+<div class="admin-layout">
 
-        function logout() {
-            sessionStorage.removeItem("servicegrow_token");
-            sessionStorage.removeItem("servicegrow_user");
-            window.location.href = "login.html";
-        }
-    </script>
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar" id="adminSidebar">
+
+        <a href="index.html" class="admin-logo">
+            <span class="logo-symbol">◆</span>
+            <span>service<span>grow</span></span>
+        </a>
+
+        <div class="admin-profile">
+            <div class="profile-avatar">A</div>
+            <div>
+                <strong id="adminName">Administrator</strong>
+                <small>Platform Admin</small>
+            </div>
+        </div>
+
+        <nav class="sidebar-navigation">
+
+            <p class="sidebar-label">MAIN MENU</p>
+
+            <a href="#overview" class="sidebar-link active">
+                <span>▦</span> Overview
+            </a>
+
+            <a href="#businesses" class="sidebar-link">
+                <span>▣</span> Businesses
+            </a>
+
+            <a href="#customers" class="sidebar-link">
+                <span>♙</span> Customers
+            </a>
+
+            <a href="#reviews" class="sidebar-link">
+                <span>★</span> Reviews
+            </a>
+
+            <a href="#followups" class="sidebar-link">
+                <span>↗</span> Follow-ups
+            </a>
+
+            <a href="#reports" class="sidebar-link">
+                <span>▤</span> Reports
+            </a>
+
+            <p class="sidebar-label settings-label">MANAGEMENT</p>
+
+            <a href="#activity" class="sidebar-link">
+                <span>◷</span> Activity Logs
+            </a>
+
+            <a href="#settings" class="sidebar-link">
+                <span>⚙</span> Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-help">
+                <span>?</span>
+                <div>
+                    <strong>Need Help?</strong>
+                    <small>Contact support</small>
+                </div>
+            </div>
+
+            <button class="logout-button" id="logoutButton">
+                <span>↪</span> Logout
+            </button>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+
+    <main class="admin-main" id="overview">
+
+        <!-- TOPBAR -->
+
+        <header class="admin-topbar">
+
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    ☰
+                </button>
+
+                <div>
+                    <h2>Dashboard Overview</h2>
+                    <p>Welcome back! Here's what's happening with ServiceGrow.</p>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <span class="admin-date" id="currentDate"></span>
+                <div class="topbar-avatar">A</div>
+            </div>
+
+        </header>
+
+        <!-- DASHBOARD CONTENT -->
+
+        <div class="dashboard-content">
+
+            <!-- WELCOME -->
+
+            <section class="welcome-banner">
+                <div>
+                    <span>ADMIN CONTROL CENTER</span>
+                    <h1>Welcome back, <strong id="welcomeAdminName">Admin!</strong></h1>
+                    <p>Manage businesses, customers and platform activity from one place.</p>
+                </div>
+
+                <div class="welcome-icon">↗</div>
+            </section>
+
+            <!-- STATISTICS -->
+
+            <section class="stats-container">
+
+                <div class="admin-stat-card">
+                    <div class="stat-top">
+                        <span>Total Businesses</span>
+                        <span class="stat-icon orange-icon">▣</span>
+                    </div>
+                    <h2 id="totalBusinesses">0</h2>
+                    <small>Registered businesses</small>
+                </div>
+
+                <div class="admin-stat-card">
+                    <div class="stat-top">
+                        <span>Total Customers</span>
+                        <span class="stat-icon blue-icon">♙</span>
+                    </div>
+                    <h2 id="totalCustomers">0</h2>
+                    <small>Customers across businesses</small>
+                </div>
+
+                <div class="admin-stat-card">
+                    <div class="stat-top">
+                        <span>Reviews Collected</span>
+                        <span class="stat-icon green-icon">★</span>
+                    </div>
+                    <h2 id="totalReviews">0</h2>
+                    <small>Customer feedback records</small>
+                </div>
+
+                <div class="admin-stat-card">
+                    <div class="stat-top">
+                        <span>Follow-ups Sent</span>
+                        <span class="stat-icon purple-icon">↗</span>
+                    </div>
+                    <h2 id="totalFollowups">0</h2>
+                    <small>Follow-up activity records</small>
+                </div>
+
+            </section>
+
+            <!-- BUSINESS SECTION -->
+
+            <section class="admin-panel" id="businesses">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Business Accounts</h3>
+                        <p>Overview of registered business owners.</p>
+                    </div>
+
+                    <button class="panel-action" id="viewBusinessesButton">
+                        View All →
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="admin-table">
+
+                        <thead>
+                            <tr>
+                                <th>BUSINESS</th>
+                                <th>OWNER</th>
+                                <th>INDUSTRY</th>
+                                <th>STATUS</th>
+                                <th>JOINED</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="businessTableBody">
+
+                            <tr>
+                                <td colspan="5" class="empty-table">
+                                    Business records will appear here after backend integration.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </section>
+
+            <!-- CUSTOMER AND ACTIVITY -->
+
+            <section class="admin-two-column">
+
+                <div class="admin-panel" id="customers">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Customer Overview</h3>
+                            <p>Customer management summary.</p>
+                        </div>
+                    </div>
+
+                    <div class="overview-item">
+                        <div class="overview-icon orange-icon">♙</div>
+                        <div>
+                            <strong>Customer Records</strong>
+                            <small>Manage customer information</small>
+                        </div>
+                        <span class="overview-value" id="customerOverview">0</span>
+                    </div>
+
+                    <div class="overview-item">
+                        <div class="overview-icon green-icon">✓</div>
+                        <div>
+                            <strong>Active Businesses</strong>
+                            <small>Currently active accounts</small>
+                        </div>
+                        <span class="overview-value" id="activeBusinesses">0</span>
+                    </div>
+
+                    <div class="overview-item">
+                        <div class="overview-icon purple-icon">★</div>
+                        <div>
+                            <strong>Feedback Records</strong>
+                            <small>Collected customer feedback</small>
+                        </div>
+                        <span class="overview-value" id="feedbackOverview">0</span>
+                    </div>
+
+                </div>
+
+                <div class="admin-panel" id="activity">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Recent Activity</h3>
+                            <p>Latest platform updates.</p>
+                        </div>
+                    </div>
+
+                    <div class="activity-list" id="activityList">
+
+                        <div class="activity-entry">
+                            <span class="activity-dot"></span>
+                            <div>
+                                <strong>Admin Dashboard Created</strong>
+                                <small>Dashboard interface is ready for integration.</small>
+                            </div>
+                        </div>
+
+                        <div class="activity-entry">
+                            <span class="activity-dot"></span>
+                            <div>
+                                <strong>Business Management</strong>
+                                <small>Business records will appear after database connection.</small>
+                            </div>
+                        </div>
+
+                        <div class="activity-entry">
+                            <span class="activity-dot"></span>
+                            <div>
+                                <strong>Customer Management</strong>
+                                <small>Customer statistics are awaiting backend data.</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- REVIEWS -->
+
+            <section class="admin-panel" id="reviews">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Review Management</h3>
+                        <p>Monitor review invitations and customer feedback.</p>
+                    </div>
+                </div>
+
+                <div class="review-summary">
+
+                    <div>
+                        <span class="review-summary-icon">★</span>
+                        <div>
+                            <strong id="reviewCount">0</strong>
+                            <small>Total review records</small>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span class="review-summary-icon">✉</span>
+                        <div>
+                            <strong id="reviewInvitations">0</strong>
+                            <small>Invitations sent</small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <p class="section-note">
+                    Review statistics will be populated from the database once the backend is connected.
+                </p>
+
+            </section>
+
+            <!-- FOLLOW UPS -->
+
+            <section class="admin-panel" id="followups">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Follow-up Management</h3>
+                        <p>Track customer follow-up activity.</p>
+                    </div>
+                </div>
+
+                <div class="followup-summary">
+                    <div>
+                        <strong id="followupTotal">0</strong>
+                        <span>Total follow-ups</span>
+                    </div>
+
+                    <div>
+                        <strong id="followupCompleted">0</strong>
+                        <span>Completed</span>
+                    </div>
+
+                    <div>
+                        <strong id="followupPending">0</strong>
+                        <span>Pending</span>
+                    </div>
+                </div>
+
+                <p class="section-note">
+                    These figures will update when follow-up records are connected to MySQL.
+                </p>
+
+            </section>
+
+            <!-- REPORTS -->
+
+            <section class="admin-panel" id="reports">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Platform Reports</h3>
+                        <p>Business and customer performance information.</p>
+                    </div>
+                </div>
+
+                <div class="report-placeholder">
+                    <span>▤</span>
+                    <h4>Reports & Analytics</h4>
+                    <p>Charts and reports will be displayed here after analytics integration.</p>
+                </div>
+
+            </section>
+
+            <!-- SETTINGS -->
+
+            <section class="admin-panel" id="settings">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Account Settings</h3>
+                        <p>Administrator account information.</p>
+                    </div>
+                </div>
+
+                <div class="settings-information">
+                    <div>
+                        <small>Account Name</small>
+                        <strong id="settingsAdminName">Administrator</strong>
+                    </div>
+
+                    <div>
+                        <small>Account Email</small>
+                        <strong id="settingsAdminEmail">Not loaded</strong>
+                    </div>
+
+                    <div>
+                        <small>Account Role</small>
+                        <strong>Administrator</strong>
+                    </div>
+                </div>
+
+            </section>
+
+            <footer class="admin-footer">
+                © <span id="adminYear"></span> ServiceGrow. Admin Dashboard.
+            </footer>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="admin-dashboard.js"></script>
+
 </body>
 </html>

@@ -1798,3 +1798,18 @@ button {
         transition: none;
     }
 }
+.nav-login-btn {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+.nav-login-btn:hover {
+    color: #ff9f43;
+    border-color: #ff9f43;
+    background: rgba(255, 159, 67, 0.08);
+}

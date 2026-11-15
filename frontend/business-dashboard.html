@@ -4,26 +4,531 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Business Dashboard | ServiceGrow</title>
+
+    <link rel="stylesheet" href="business-dashboard.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body style="background:#080b12;color:white;font-family:Arial;padding:50px;">
-    <h1 style="color:#ff963d;">ServiceGrow Business Dashboard</h1>
-    <p>Welcome, Business Owner! Your login is working successfully.</p>
-    <button onclick="logout()">Logout</button>
 
-    <script>
-        const token = sessionStorage.getItem("servicegrow_token");
-        const user = JSON.parse(sessionStorage.getItem("servicegrow_user") || "null");
+<body>
 
-        if (!token || !user || user.role !== "business_owner") {
-            window.location.href = "login.html";
-        }
+<div class="dashboard-layout">
 
-        function logout() {
-            sessionStorage.removeItem("servicegrow_token");
-            sessionStorage.removeItem("servicegrow_user");
-            window.location.href = "login.html";
-        }
-    </script>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="index.html" class="brand">
+            <span class="brand-icon">S</span>
+            <span>service<span class="orange">grow</span></span>
+        </a>
+
+        <div class="sidebar-label">WORKSPACE</div>
+
+        <nav class="sidebar-nav">
+
+            <a href="#overview" class="nav-link active">
+                <span>▦</span> Overview
+            </a>
+
+            <a href="#customers" class="nav-link">
+                <span>♙</span> Customers
+            </a>
+
+            <a href="#followups" class="nav-link">
+                <span>↗</span> Follow-ups
+            </a>
+
+            <a href="#reviews" class="nav-link">
+                <span>☆</span> Reviews
+            </a>
+
+            <a href="#campaigns" class="nav-link">
+                <span>◷</span> Campaigns
+            </a>
+
+            <a href="#analytics" class="nav-link">
+                <span>▥</span> Analytics
+            </a>
+
+        </nav>
+
+        <div class="sidebar-label">ACCOUNT</div>
+
+        <nav class="sidebar-nav">
+
+            <a href="#business-profile" class="nav-link">
+                <span>♙</span> Business Profile
+            </a>
+
+            <a href="#settings" class="nav-link">
+                <span>⚙</span> Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-help">
+                <span class="help-icon">?</span>
+                <strong>Need Help?</strong>
+                <p>Our team is here to support your business.</p>
+                <a href="index.html#contact">Contact Support →</a>
+            </div>
+
+            <button class="logout-btn" id="logoutButton">
+                <span>↪</span> Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <button class="menu-toggle" id="menuToggle">☰</button>
+
+            <div class="topbar-heading">
+                <h2>Business Dashboard</h2>
+                <p>Manage your customer relationships.</p>
+            </div>
+
+            <div class="topbar-actions">
+
+                <button class="notification-btn" id="notificationButton">
+                    ♧
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="profile-area">
+                    <div class="profile-avatar" id="profileAvatar">B</div>
+                    <div>
+                        <strong id="businessOwnerName">Business Owner</strong>
+                        <small id="businessOwnerEmail">owner@example.com</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- OVERVIEW -->
+        <section class="dashboard-section" id="overview">
+
+            <div class="welcome-row">
+                <div>
+                    <span class="section-tag">BUSINESS OVERVIEW</span>
+                    <h1>Welcome back, <span id="welcomeName">Business Owner</span>!</h1>
+                    <p>Here's what's happening with your business today.</p>
+                </div>
+
+                <button class="primary-btn" id="addCustomerButton">
+                    + Add Customer
+                </button>
+            </div>
+
+
+            <!-- STAT CARDS -->
+            <div class="stats-grid">
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Total Customers</span>
+                        <span class="stat-icon orange-bg">♙</span>
+                    </div>
+                    <h2 id="totalCustomers">0</h2>
+                    <p>Customers in your database</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Review Invitations</span>
+                        <span class="stat-icon purple-bg">✉</span>
+                    </div>
+                    <h2 id="reviewInvitations">0</h2>
+                    <p>Invitations sent to customers</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Customer Feedback</span>
+                        <span class="stat-icon green-bg">☆</span>
+                    </div>
+                    <h2 id="customerFeedback">0</h2>
+                    <p>Feedback received</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>Pending Follow-ups</span>
+                        <span class="stat-icon blue-bg">↗</span>
+                    </div>
+                    <h2 id="pendingFollowups">0</h2>
+                    <p>Customers to follow up with</p>
+                </article>
+
+            </div>
+
+
+            <!-- CHARTS -->
+            <div class="dashboard-grid" id="analytics">
+
+                <div class="panel chart-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Customer Activity</h3>
+                            <p>Overview of customer engagement</p>
+                        </div>
+
+                        <select id="activityFilter">
+                            <option value="7">Last 7 days</option>
+                            <option value="30">Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                        </select>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="customerActivityChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Follow-up Status</h3>
+                            <p>Customer follow-up progress</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-container doughnut-container">
+                        <canvas id="followupChart"></canvas>
+                    </div>
+
+                    <div class="chart-legend">
+                        <span><i class="legend-dot green-dot"></i> Completed</span>
+                        <span><i class="legend-dot orange-dot"></i> Pending</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT CUSTOMERS -->
+            <div class="panel table-panel" id="customers">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Recent Customers</h3>
+                        <p>Latest customers added to your business</p>
+                    </div>
+
+                    <button class="text-btn" id="viewAllCustomers">
+                        View All →
+                    </button>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Last Activity</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="customerTableBody">
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    Customer records will appear here when available.
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOLLOW UPS -->
+        <section class="dashboard-section" id="followups">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-tag">CUSTOMER RELATIONSHIPS</span>
+                    <h2>Follow-up Management</h2>
+                    <p>Keep track of customers who need attention.</p>
+                </div>
+            </div>
+
+            <div class="panel table-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Upcoming Follow-ups</h3>
+                        <p>Your scheduled customer follow-ups</p>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Follow-up Date</th>
+                                <th>Purpose</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="followupTableBody">
+                            <tr>
+                                <td colspan="4" class="empty-state">
+                                    No follow-up records available yet.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REVIEWS -->
+        <section class="dashboard-section" id="reviews">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-tag">CUSTOMER FEEDBACK</span>
+                    <h2>Review Management</h2>
+                    <p>Monitor honest feedback from your customers.</p>
+                </div>
+            </div>
+
+            <div class="review-summary-grid">
+
+                <div class="panel review-summary">
+                    <span>Total Feedback</span>
+                    <h2 id="totalReviews">0</h2>
+                    <p>Feedback received</p>
+                </div>
+
+                <div class="panel review-summary">
+                    <span>Average Rating</span>
+                    <h2 id="averageRating">—</h2>
+                    <p>Based on available ratings</p>
+                </div>
+
+                <div class="panel review-summary">
+                    <span>Invitations Sent</span>
+                    <h2 id="totalReviewRequests">0</h2>
+                    <p>Customer review invitations</p>
+                </div>
+
+            </div>
+
+            <div class="panel table-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Recent Feedback</h3>
+                        <p>Latest customer responses</p>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Rating</th>
+                                <th>Feedback</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="reviewTableBody">
+                            <tr>
+                                <td colspan="4" class="empty-state">
+                                    Customer feedback will appear here.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- CAMPAIGNS -->
+        <section class="dashboard-section" id="campaigns">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-tag">CUSTOMER RETENTION</span>
+                    <h2>Campaign Management</h2>
+                    <p>Plan ways to reconnect with past customers.</p>
+                </div>
+
+                <button class="primary-btn" id="createCampaignButton">
+                    + Create Campaign
+                </button>
+            </div>
+
+            <div class="panel empty-panel">
+                <div class="empty-panel-icon">◷</div>
+                <h3>No campaigns yet</h3>
+                <p>Your customer re-engagement campaigns will appear here.</p>
+            </div>
+
+        </section>
+
+
+        <!-- BUSINESS PROFILE -->
+        <section class="dashboard-section" id="business-profile">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-tag">YOUR BUSINESS</span>
+                    <h2>Business Profile</h2>
+                    <p>Manage your business information.</p>
+                </div>
+            </div>
+
+            <div class="panel profile-panel">
+
+                <div class="profile-detail">
+                    <span>Business Name</span>
+                    <strong id="businessName">Not configured</strong>
+                </div>
+
+                <div class="profile-detail">
+                    <span>Business Email</span>
+                    <strong id="businessEmail">Not configured</strong>
+                </div>
+
+                <div class="profile-detail">
+                    <span>Industry</span>
+                    <strong id="businessIndustry">Not configured</strong>
+                </div>
+
+                <div class="profile-detail">
+                    <span>Account Status</span>
+                    <strong id="businessStatus">Not available</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SETTINGS -->
+        <section class="dashboard-section" id="settings">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-tag">PREFERENCES</span>
+                    <h2>Account Settings</h2>
+                    <p>Manage your ServiceGrow account preferences.</p>
+                </div>
+            </div>
+
+            <div class="panel settings-panel">
+                <div>
+                    <h3>Account Security</h3>
+                    <p>Keep your login credentials safe and secure.</p>
+                </div>
+
+                <div>
+                    <h3>Notifications</h3>
+                    <p>Manage your customer activity notifications.</p>
+                </div>
+
+                <div>
+                    <h3>Support</h3>
+                    <p>Contact the ServiceGrow team for assistance.</p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <footer class="dashboard-footer">
+            © <span id="dashboardYear"></span> ServiceGrow. All rights reserved.
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- ADD CUSTOMER MODAL -->
+<div class="modal" id="customerModal">
+
+    <div class="modal-card">
+
+        <div class="modal-heading">
+            <div>
+                <h2>Add New Customer</h2>
+                <p>Enter the customer's details below.</p>
+            </div>
+
+            <button class="modal-close" id="closeCustomerModal">×</button>
+        </div>
+
+        <form id="customerForm">
+
+            <label for="customerName">Customer Name</label>
+            <input type="text" id="customerName" name="name" required>
+
+            <label for="customerEmail">Email Address</label>
+            <input type="email" id="customerEmail" name="email" required>
+
+            <label for="customerPhone">Phone Number</label>
+            <input type="tel" id="customerPhone" name="phone">
+
+            <label for="customerNotes">Notes</label>
+            <textarea id="customerNotes" name="notes" rows="3"></textarea>
+
+            <p id="customerFormMessage" aria-live="polite"></p>
+
+            <button type="submit" class="primary-btn">
+                Save Customer
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="business-dashboard.js"></script>
+
 </body>
 </html>

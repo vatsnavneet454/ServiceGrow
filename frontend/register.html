@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | ServiceGrow</title>
+
+    <link rel="stylesheet" href="register.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <div class="register-left">
+
+        <a href="index.html" class="logo">
+            Service<span>Grow</span>
+        </a>
+
+        <div class="register-heading">
+            <span class="eyebrow">JOIN SERVICEGROW</span>
+
+            <h1>Create Your Account</h1>
+
+            <p>
+                Start building stronger customer relationships
+                with ServiceGrow.
+            </p>
+        </div>
+
+        <div class="register-decoration">
+            <i class="fas fa-chart-line"></i>
+            <h3>Grow your business relationships.</h3>
+            <p>Better follow-ups. Honest feedback. Stronger connections.</p>
+        </div>
+
+    </div>
+
+
+    <div class="register-right">
+
+        <div class="register-form-wrapper">
+
+            <h2>Create Account</h2>
+
+            <p class="form-subtitle">
+                Select your account type to get started.
+            </p>
+
+            <form id="registerForm">
+
+                <!-- Account Type -->
+                <div class="form-group">
+
+                    <label>Select Account Type</label>
+
+                    <div class="account-type-options">
+
+                        <label class="account-type-card selected"
+                               for="businessOwner">
+
+                            <input
+                                type="radio"
+                                name="accountType"
+                                id="businessOwner"
+                                value="business_owner"
+                                checked
+                            >
+
+                            <i class="fas fa-briefcase"></i>
+
+                            <span>Business Owner</span>
+
+                            <small>Manage your business</small>
+
+                        </label>
+
+
+                        <label class="account-type-card"
+                               for="customer">
+
+                            <input
+                                type="radio"
+                                name="accountType"
+                                id="customer"
+                                value="customer"
+                            >
+
+                            <i class="fas fa-user"></i>
+
+                            <span>Customer</span>
+
+                            <small>Access your services</small>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Common Fields -->
+
+                <div class="form-group">
+
+                    <label for="name">Full Name</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="phone">Phone Number</label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Business Only Fields -->
+
+                <div id="businessFields">
+
+                    <div class="form-group">
+
+                        <label for="businessName">Business Name</label>
+
+                        <input
+                            type="text"
+                            id="businessName"
+                            name="businessName"
+                            placeholder="Enter your business name"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="industry">Business Industry</label>
+
+                        <select id="industry" name="industry">
+
+                            <option value="">Select Industry</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Electrical Services">Electrical Services</option>
+                            <option value="HVAC">HVAC Services</option>
+                            <option value="Roofing">Roofing</option>
+                            <option value="Cleaning">Cleaning Services</option>
+                            <option value="Landscaping">Landscaping</option>
+                            <option value="Pest Control">Pest Control</option>
+                            <option value="Garage Door Services">Garage Door Services</option>
+                            <option value="Painting">Painting Services</option>
+                            <option value="Handyman">Handyman Services</option>
+                            <option value="Other">Other</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <label for="password">Password</label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            required
+                        >
+
+                        <button type="button"
+                                id="togglePassword"
+                                class="toggle-password"
+                                aria-label="Show password">
+
+                            <i class="fas fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                    <small class="input-hint">
+                        Minimum 8 characters with uppercase,
+                        lowercase and a number.
+                    </small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">Confirm Password</label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Terms -->
+
+                <div class="terms-group">
+
+                    <input
+                        type="checkbox"
+                        id="agreeTerms"
+                        required
+                    >
+
+                    <label for="agreeTerms">
+                        I agree to the
+                        <a href="terms.html">Terms and Conditions</a>
+                        and
+                        <a href="privacy-policy.html">Privacy Policy</a>.
+                    </label>
+
+                </div>
+
+
+                <p id="registerMessage" class="register-message"></p>
+
+
+                <button type="submit"
+                        id="registerButton"
+                        class="register-submit">
+
+                    Create Account
+                    <i class="fas fa-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <div class="login-redirect">
+
+                Already have an account?
+
+                <a href="login.html">Login here</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="register.js"></script>
+
+</body>
+</html>
