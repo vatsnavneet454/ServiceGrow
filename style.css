@@ -1813,3 +1813,1200 @@ button {
     border-color: #ff9f43;
     background: rgba(255, 159, 67, 0.08);
 }
+
+/* =========================================
+   SERVICEGROW LOGIN POPUP
+========================================= */
+
+.sg-modal-open {
+    overflow: hidden;
+}
+
+.sg-login-overlay[hidden] {
+    display: none !important;
+}
+
+.sg-login-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(4, 7, 15, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.sg-login-modal {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 38px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 157, 25, 0.18);
+    background: linear-gradient(145deg, #172235, #0d1421);
+    box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.6),
+        0 0 55px rgba(255, 157, 25, 0.06);
+    animation: sgLoginEnter 0.35s ease both;
+}
+
+@keyframes sgLoginEnter {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.sg-login-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.sg-login-close:hover {
+    color: var(--orange);
+}
+
+.sg-login-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.sg-login-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 18px;
+    border-radius: 14px;
+    background: rgba(255, 157, 25, 0.12);
+    color: var(--orange);
+    font-size: 27px;
+}
+
+.sg-login-header h2 {
+    font-size: 26px;
+    margin-bottom: 7px;
+}
+
+.sg-login-header p {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.sg-form-group {
+    margin-bottom: 20px;
+}
+
+.sg-form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+.sg-form-group input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 9px;
+    background: #0a111e;
+    color: white;
+    outline: none;
+    font-size: 13px;
+}
+
+.sg-form-group input:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(255, 157, 25, 0.08);
+}
+
+.sg-password-wrapper {
+    position: relative;
+}
+
+.sg-password-wrapper input {
+    padding-right: 70px;
+}
+
+#togglePassword {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: var(--orange);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.sg-login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    font-size: 12px;
+}
+
+.sg-login-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sg-login-options input {
+    accent-color: var(--orange);
+}
+
+.sg-login-options a,
+.sg-login-register a {
+    color: var(--orange);
+}
+
+.sg-login-submit {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: var(--orange);
+    color: #111;
+    font-size: 13px;
+    font-weight: 800;
+    transition: 0.3s ease;
+}
+
+.sg-login-submit:hover {
+    background: var(--orange-light);
+    transform: translateY(-2px);
+}
+
+.sg-login-submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.sg-login-message {
+    margin-top: 12px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.sg-login-register {
+    margin-top: 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media (max-width: 480px) {
+    .sg-login-modal {
+        padding: 28px 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sg-login-modal {
+        animation: none;
+    }
+}
+
+/* ==========================================
+   SERVICEGROW AUTHENTICATION POPUPS
+   Login + Business Registration
+========================================== */
+
+body.sg-modal-open {
+    overflow: hidden;
+}
+
+.sg-auth-overlay[hidden] {
+    display: none !important;
+}
+
+.sg-auth-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background: rgba(3, 7, 15, 0.86);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+/* MODAL */
+
+.sg-auth-modal {
+    position: relative;
+
+    width: 100%;
+    max-width: 460px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 38px;
+
+    background: linear-gradient(
+        145deg,
+        #182437 0%,
+        #111a2a 55%,
+        #0b121e 100%
+    );
+
+    border: 1px solid rgba(255, 157, 25, 0.22);
+    border-radius: 20px;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.7),
+        0 0 60px rgba(255, 157, 25, 0.05);
+
+    animation: sgModalShow 0.35s ease;
+
+    scrollbar-width: thin;
+    scrollbar-color: #ff9d19 #111827;
+}
+
+.sg-register-modal {
+    max-width: 510px;
+}
+
+@keyframes sgModalShow {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* CLOSE BUTTON */
+
+.sg-auth-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+
+    background: transparent;
+    border: none;
+
+    color: #9ca8ba;
+    font-size: 30px;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.sg-auth-close:hover {
+    color: #ff9d19;
+    transform: rotate(90deg);
+}
+
+/* HEADER */
+
+.sg-auth-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.sg-auth-icon {
+    width: 60px;
+    height: 60px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background: rgba(255, 157, 25, 0.12);
+    border: 1px solid rgba(255, 157, 25, 0.25);
+
+    color: #ff9d19;
+    font-size: 29px;
+}
+
+.sg-auth-tag {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #ffb84d;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.sg-auth-header h2 {
+    margin: 0 0 10px;
+
+    color: #ffffff;
+    font-size: 29px;
+    font-weight: 800;
+}
+
+.sg-auth-header p {
+    color: #929caf;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* FORM FIELDS */
+
+.sg-auth-group {
+    margin-bottom: 18px;
+}
+
+.sg-auth-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #e3e9f2;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.sg-auth-group input,
+.sg-auth-group select {
+    width: 100%;
+    min-height: 48px;
+
+    padding: 12px 15px;
+
+    background: #0a111e;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.sg-auth-group input::placeholder {
+    color: #778398;
+}
+
+.sg-auth-group input:focus,
+.sg-auth-group select:focus {
+    border-color: #ff9d19;
+    box-shadow: 0 0 0 3px rgba(255, 157, 25, 0.1);
+}
+
+.sg-auth-group select option {
+    background: #111a2a;
+    color: #ffffff;
+}
+
+/* PASSWORD */
+
+.sg-auth-password {
+    position: relative;
+}
+
+.sg-auth-password input {
+    padding-right: 75px;
+}
+
+.sg-auth-password button {
+    position: absolute;
+
+    top: 50%;
+    right: 14px;
+
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
+
+    color: #ff9d19;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.sg-auth-hint {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #929caf;
+    font-size: 11px;
+}
+
+/* LOGIN OPTIONS */
+
+.sg-auth-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin: 7px 0 24px;
+
+    font-size: 12px;
+}
+
+.sg-auth-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #c8d0dc;
+
+    cursor: pointer;
+}
+
+.sg-auth-options input,
+.sg-auth-terms input {
+    accent-color: #ff9d19;
+}
+
+.sg-auth-options a,
+.sg-auth-terms a {
+    color: #ff9d19;
+    text-decoration: none;
+}
+
+.sg-auth-options a:hover,
+.sg-auth-terms a:hover {
+    text-decoration: underline;
+}
+
+/* TERMS */
+
+.sg-auth-terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    margin: 15px 0 22px;
+
+    color: #aeb8c7;
+
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.sg-auth-terms input {
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+/* SUBMIT BUTTON */
+
+.sg-auth-submit {
+    width: 100%;
+    min-height: 49px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 13px 18px;
+
+    background: #ff9d19;
+    border: none;
+    border-radius: 10px;
+
+    color: #101010;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.sg-auth-submit:hover:not(:disabled) {
+    background: #ffb84d;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 157, 25, 0.15);
+}
+
+.sg-auth-submit:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+/* MESSAGES */
+
+.sg-auth-message {
+    margin-top: 13px;
+
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.sg-auth-message:empty {
+    display: none;
+}
+
+/* DIVIDER */
+
+.sg-auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 25px 0 20px;
+
+    color: #8390a3;
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.sg-auth-divider::before,
+.sg-auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* SWITCH BETWEEN LOGIN AND REGISTER */
+
+.sg-auth-switch {
+    text-align: center;
+
+    color: #929caf;
+
+    font-size: 12px;
+}
+
+.sg-auth-switch button {
+    margin-left: 5px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+
+    color: #ff9d19;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.sg-auth-switch button:hover {
+    text-decoration: underline;
+}
+
+.sg-auth-secure {
+    margin-top: 24px;
+
+    text-align: center;
+
+    color: #929caf;
+    font-size: 11px;
+}
+
+/* MOBILE */
+
+@media (max-width: 550px) {
+    .sg-auth-overlay {
+        padding: 12px;
+    }
+
+    .sg-auth-modal {
+        padding: 30px 21px;
+        max-height: 94vh;
+        border-radius: 15px;
+    }
+
+    .sg-auth-header h2 {
+        font-size: 24px;
+    }
+
+    .sg-auth-options {
+        font-size: 11px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sg-auth-modal {
+        animation: none;
+    }
+}
+
+/* ==========================================
+   SERVICEGROW AUTHENTICATION POPUPS
+   Login + Business Registration
+========================================== */
+
+body.sg-modal-open {
+    overflow: hidden;
+}
+
+.sg-auth-overlay[hidden] {
+    display: none !important;
+}
+
+.sg-auth-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background: rgba(3, 7, 15, 0.86);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+/* MODAL */
+
+.sg-auth-modal {
+    position: relative;
+
+    width: 100%;
+    max-width: 460px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 38px;
+
+    background: linear-gradient(
+        145deg,
+        #182437 0%,
+        #111a2a 55%,
+        #0b121e 100%
+    );
+
+    border: 1px solid rgba(255, 157, 25, 0.22);
+    border-radius: 20px;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.7),
+        0 0 60px rgba(255, 157, 25, 0.05);
+
+    animation: sgModalShow 0.35s ease;
+
+    scrollbar-width: thin;
+    scrollbar-color: #ff9d19 #111827;
+}
+
+.sg-register-modal {
+    max-width: 510px;
+}
+
+@keyframes sgModalShow {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* CLOSE BUTTON */
+
+.sg-auth-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+
+    background: transparent;
+    border: none;
+
+    color: #9ca8ba;
+    font-size: 30px;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.sg-auth-close:hover {
+    color: #ff9d19;
+    transform: rotate(90deg);
+}
+
+/* HEADER */
+
+.sg-auth-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.sg-auth-icon {
+    width: 60px;
+    height: 60px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background: rgba(255, 157, 25, 0.12);
+    border: 1px solid rgba(255, 157, 25, 0.25);
+
+    color: #ff9d19;
+    font-size: 29px;
+}
+
+.sg-auth-tag {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #ffb84d;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.sg-auth-header h2 {
+    margin: 0 0 10px;
+
+    color: #ffffff;
+    font-size: 29px;
+    font-weight: 800;
+}
+
+.sg-auth-header p {
+    color: #929caf;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* FORM FIELDS */
+
+.sg-auth-group {
+    margin-bottom: 18px;
+}
+
+.sg-auth-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #e3e9f2;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.sg-auth-group input,
+.sg-auth-group select {
+    width: 100%;
+    min-height: 48px;
+
+    padding: 12px 15px;
+
+    background: #0a111e;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.sg-auth-group input::placeholder {
+    color: #778398;
+}
+
+.sg-auth-group input:focus,
+.sg-auth-group select:focus {
+    border-color: #ff9d19;
+    box-shadow: 0 0 0 3px rgba(255, 157, 25, 0.1);
+}
+
+.sg-auth-group select option {
+    background: #111a2a;
+    color: #ffffff;
+}
+
+/* PASSWORD */
+
+.sg-auth-password {
+    position: relative;
+}
+
+.sg-auth-password input {
+    padding-right: 75px;
+}
+
+.sg-auth-password button {
+    position: absolute;
+
+    top: 50%;
+    right: 14px;
+
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
+
+    color: #ff9d19;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.sg-auth-hint {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #929caf;
+    font-size: 11px;
+}
+
+/* LOGIN OPTIONS */
+
+.sg-auth-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin: 7px 0 24px;
+
+    font-size: 12px;
+}
+
+.sg-auth-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #c8d0dc;
+
+    cursor: pointer;
+}
+
+.sg-auth-options input,
+.sg-auth-terms input {
+    accent-color: #ff9d19;
+}
+
+.sg-auth-options a,
+.sg-auth-terms a {
+    color: #ff9d19;
+    text-decoration: none;
+}
+
+.sg-auth-options a:hover,
+.sg-auth-terms a:hover {
+    text-decoration: underline;
+}
+
+/* TERMS */
+
+.sg-auth-terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    margin: 15px 0 22px;
+
+    color: #aeb8c7;
+
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.sg-auth-terms input {
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+/* SUBMIT BUTTON */
+
+.sg-auth-submit {
+    width: 100%;
+    min-height: 49px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 13px 18px;
+
+    background: #ff9d19;
+    border: none;
+    border-radius: 10px;
+
+    color: #101010;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.sg-auth-submit:hover:not(:disabled) {
+    background: #ffb84d;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 157, 25, 0.15);
+}
+
+.sg-auth-submit:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+/* MESSAGES */
+
+.sg-auth-message {
+    margin-top: 13px;
+
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.sg-auth-message:empty {
+    display: none;
+}
+
+/* DIVIDER */
+
+.sg-auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 25px 0 20px;
+
+    color: #8390a3;
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.sg-auth-divider::before,
+.sg-auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* SWITCH BETWEEN LOGIN AND REGISTER */
+
+.sg-auth-switch {
+    text-align: center;
+
+    color: #929caf;
+
+    font-size: 12px;
+}
+
+.sg-auth-switch button {
+    margin-left: 5px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+
+    color: #ff9d19;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.sg-auth-switch button:hover {
+    text-decoration: underline;
+}
+
+.sg-auth-secure {
+    margin-top: 24px;
+
+    text-align: center;
+
+    color: #929caf;
+    font-size: 11px;
+}
+
+/* MOBILE */
+
+@media (max-width: 550px) {
+    .sg-auth-overlay {
+        padding: 12px;
+    }
+
+    .sg-auth-modal {
+        padding: 30px 21px;
+        max-height: 94vh;
+        border-radius: 15px;
+    }
+
+    .sg-auth-header h2 {
+        font-size: 24px;
+    }
+
+    .sg-auth-options {
+        font-size: 11px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sg-auth-modal {
+        animation: none;
+    }
+}
+/* AUTH POPUP VISIBILITY FIX */
+
+.sg-auth-overlay[hidden] {
+    display: none !important;
+}
+
+.sg-auth-overlay:not([hidden]) {
+    display: flex !important;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+    background: rgba(3, 8, 20, 0.85);
+    backdrop-filter: blur(10px);
+}
+
+.sg-auth-modal {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    margin: auto;
+    background: #101a2e;
+    color: #fff;
+    border: 1px solid rgba(255, 157, 25, 0.2);
+    border-radius: 20px;
+    padding: 32px;
+}
+
+.sg-register-modal {
+    max-width: 520px;
+}
+
+.sg-auth-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.sg-auth-switch button {
+    cursor: pointer;
+    color: #ff9d19;
+    background: transparent;
+    border: none;
+    font: inherit;
+    font-weight: 700;
+}
+
+.sg-modal-open {
+    overflow: hidden;
+}
+/* NAVBAR LOGIN BUTTON */
+
+.nav-login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 24px;
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-login-btn:hover {
+    background: #ff9d19;
+    color: #101827;
+    border-color: #ff9d19;
+}

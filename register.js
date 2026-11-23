@@ -236,13 +236,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         // Prepare registration data
-        const registrationData = {
-            name,
-            email,
-            phone,
-            password,
-            role: accountType
-        };
+        // const registrationData = {
+        //     name,
+        //     email,
+        //     phone,
+        //     password,
+        //     role: accountType
+        // };
 
 
         // Add business fields only for business owners

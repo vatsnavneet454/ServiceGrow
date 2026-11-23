@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,8 +38,20 @@
     </nav>
 
   <div class="nav-actions">
-    <a href="login.html" class="nav-login-btn">Login</a>
-    <a href="#book-demo" class="nav-cta">Book a Demo</a>
+    <button type="button"
+            class="nav-login-btn"
+            id="openLoginBtn"
+            data-open-login>
+        Login
+    </button>
+
+    <a href="#book-demo" class="nav-cta">
+        Book a Demo
+    </a>
+</div>
+<script src="script.js"></script>
+
+    <!-- <a href="#book-demo" class="nav-cta">Book a Demo</a> --> 
 </div></header>
 
 <main>
@@ -589,6 +601,271 @@
 
 <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
+<!-- ==========================================
+     SERVICEGROW LOGIN & REGISTER POPUP
+========================================== -->
+
+<!-- LOGIN POPUP -->
+<div class="sg-auth-overlay" id="loginPopup" hidden>
+    <div class="sg-auth-modal"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="loginTitle"
+         tabindex="-1">
+
+        <button type="button"
+                class="sg-auth-close"
+                id="closeLoginPopup"
+                aria-label="Close login">
+            &times;
+        </button>
+
+        <div class="sg-auth-header">
+            <div class="sg-auth-icon">↗</div>
+            <span class="sg-auth-tag">SERVICEGROW PORTAL</span>
+            <h2 id="loginTitle">Welcome Back!</h2>
+            <p>Sign in to manage your business growth.</p>
+        </div>
+
+        <form id="loginForm">
+
+            <div class="sg-auth-group">
+                <label for="loginEmail">Email Address</label>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email address"
+                    autocomplete="username"
+                    required>
+            </div>
+
+            <div class="sg-auth-group">
+                <label for="loginPassword">Password</label>
+
+                <div class="sg-auth-password">
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required>
+
+                    <button type="button"
+                            id="toggleLoginPassword">
+                        Show
+                    </button>
+                </div>
+            </div>
+
+            <div class="sg-auth-options">
+                <label>
+                    <input type="checkbox" id="rememberMe">
+                    Remember me
+                </label>
+
+                <a href="#" id="forgotPassword">
+                    Forgot Password?
+                </a>
+            </div>
+
+            <button type="submit"
+                    class="sg-auth-submit"
+                    id="loginButton">
+                Sign In <span>→</span>
+            </button>
+
+            <p class="sg-auth-message"
+               id="loginMessage"
+               aria-live="polite"></p>
+        </form>
+
+        <div class="sg-auth-divider">
+            <span>NEW TO SERVICEGROW?</span>
+        </div>
+
+     <p class="sg-auth-switch">
+    Don't have an account?
+    <button type="button" id="openRegisterPopup">
+        Register Your Business
+    </button>
+</p>
+
+        <p class="sg-auth-secure">
+            🔒 Secure account access
+        </p>
+    </div>
+</div>
+
+
+<!-- REGISTER POPUP -->
+<div class="sg-auth-overlay" id="registerPopup" hidden>
+    <div class="sg-auth-modal sg-register-modal"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="registerTitle"
+         tabindex="-1">
+
+        <button type="button"
+                class="sg-auth-close"
+                id="closeRegisterPopup"
+                aria-label="Close registration">
+            &times;
+        </button>
+
+        <div class="sg-auth-header">
+            <div class="sg-auth-icon">✦</div>
+            <span class="sg-auth-tag">JOIN SERVICEGROW</span>
+            <h2 id="registerTitle">Create Your Account</h2>
+            <p>Grow your business with smarter customer relationships.</p>
+        </div>
+
+        <form id="registerForm">
+
+            <div class="sg-auth-group">
+                <label for="registerName">Full Name</label>
+                <input type="text"
+                       id="registerName"
+                       placeholder="Enter your full name"
+                       autocomplete="name"
+                       required>
+            </div>
+
+            <div class="sg-auth-group">
+                <label for="registerBusiness">Business Name</label>
+                <input type="text"
+                       id="registerBusiness"
+                       placeholder="Enter business name"
+                       required>
+            </div>
+
+            <div class="sg-auth-group">
+                <label for="registerIndustry">Business Industry</label>
+                <select id="registerIndustry" required>
+                    <option value="">Select your industry</option>
+                    <option value="plumbing">Plumbing</option>
+                    <option value="hvac">HVAC</option>
+                    <option value="electrical">Electrical</option>
+                    <option value="roofing">Roofing</option>
+                    <option value="cleaning">Cleaning</option>
+                    <option value="landscaping">Landscaping</option>
+                    <option value="pest_control">Pest Control</option>
+                    <option value="garage_doors">Garage Doors</option>
+                    <option value="painting">Painting</option>
+                    <option value="handyman">Handyman</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="sg-auth-group">
+                <label for="registerEmail">Business Email</label>
+                <input type="email"
+                       id="registerEmail"
+                       placeholder="Enter business email"
+                       autocomplete="email"
+                       required>
+            </div>
+
+            <div class="sg-auth-group">
+                <label for="registerPhone">Phone Number</label>
+                <input type="tel"
+                       id="registerPhone"
+                       placeholder="Enter phone number"
+                       autocomplete="tel"
+                       required>
+            </div>
+
+            <div class="sg-auth-group">
+                <label for="registerCountry">Country</label>
+                <select id="registerCountry" required>
+                    <option value="">Select country</option>
+                    <option value="US">United States</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="CA">Canada</option>
+                    <option value="AU">Australia</option>
+                    <option value="OTHER">Other</option>
+                </select>
+            </div>
+
+            <div class="sg-auth-group">
+                <label for="registerPassword">Create Password</label>
+
+                <div class="sg-auth-password">
+                    <input type="password"
+                           id="registerPassword"
+                           placeholder="Create password"
+                           autocomplete="new-password"
+                           minlength="8"
+                           required>
+
+                    <button type="button"
+                            id="toggleRegisterPassword">
+                        Show
+                    </button>
+                </div>
+
+                <small class="sg-auth-hint">
+                    Minimum 8 characters, including uppercase,
+                    lowercase and a number.
+                </small>
+            </div>
+
+            <div class="sg-auth-group">
+                <label for="registerConfirmPassword">
+                    Confirm Password
+                </label>
+                <input type="password"
+                       id="registerConfirmPassword"
+                       placeholder="Confirm password"
+                       autocomplete="new-password"
+                       minlength="8"
+                       required>
+            </div>
+
+            <label class="sg-auth-terms">
+                <input type="checkbox"
+                       id="registerTerms"
+                       required>
+                <span>
+                    I agree to the
+                    <a href="terms.html" target="_blank"
+                       rel="noopener noreferrer">Terms of Service</a>
+                    and
+                    <a href="privacy-policy.html" target="_blank"
+                       rel="noopener noreferrer">Privacy Policy</a>.
+                </span>
+            </label>
+
+            <button type="submit"
+                    class="sg-auth-submit"
+                    id="registerButton">
+                Create Business Account <span>→</span>
+            </button>
+
+            <p class="sg-auth-message"
+               id="registerMessage"
+               aria-live="polite"></p>
+
+        </form>
+
+        <div class="sg-auth-divider">
+            <span>ALREADY HAVE AN ACCOUNT?</span>
+        </div>
+
+        <p class="sg-auth-switch">
+            Already registered?
+            <button type="button" id="backToLoginPopup">
+                Sign In
+            </button>
+        </p>
+    </div>
+</div>
+
+<!-- YOUR EXISTING WEBSITE JAVASCRIPT -->
 <script src="script.js"></script>
+
+</body>
+</html>
+
+
 </body>
 </html>

@@ -1,0 +1,197 @@
+
+.sg-login-overlay[hidden] {
+    display: none !important;
+}
+
+.sg-login-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(3, 8, 18, 0.82);
+    backdrop-filter: blur(12px);
+}
+
+.sg-login-modal {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 34px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    background: #111c2e;
+    color: #f4f7fc;
+    font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+    animation: sgModalIn .35s ease;
+}
+
+@keyframes sgModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.sg-login-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.sg-login-close:hover {
+    color: #ff963f;
+}
+
+.sg-login-header {
+    text-align: center;
+    margin-bottom: 27px;
+}
+
+.sg-login-icon {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 17px;
+    border-radius: 14px;
+    background: rgba(255,150,63,.13);
+    color: #ff963f;
+    font-size: 26px;
+}
+
+.sg-login-header h2 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.sg-login-header p {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.sg-form-group {
+    margin-bottom: 19px;
+}
+
+.sg-form-group label {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.sg-form-group input {
+    width: 100%;
+    padding: 13px 14px;
+    background: #0b1423;
+    border: 1px solid #344057;
+    border-radius: 9px;
+    outline: none;
+    color: #fff;
+    font: inherit;
+    font-size: 13px;
+}
+
+.sg-form-group input:focus {
+    border-color: #ff963f;
+}
+
+.sg-password-wrapper {
+    position: relative;
+}
+
+.sg-password-wrapper input {
+    padding-right: 65px;
+}
+
+#togglePassword {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #ff963f;
+    cursor: pointer;
+}
+
+.sg-login-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 23px;
+    font-size: 12px;
+}
+
+.sg-login-options label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.sg-login-options input {
+    accent-color: #ff963f;
+}
+
+.sg-login-options a,
+.sg-login-register a {
+    color: #ff963f;
+    text-decoration: none;
+}
+
+.sg-login-submit {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: #ff963f;
+    color: #17100a;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.sg-login-submit:hover {
+    background: #ffb06d;
+    transform: translateY(-2px);
+}
+
+.sg-login-submit:disabled {
+    opacity: .65;
+    cursor: wait;
+}
+
+.sg-login-message {
+    margin-top: 12px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.sg-login-register {
+    text-align: center;
+    margin-top: 23px;
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+@media (max-width: 480px) {
+    .sg-login-modal {
+        padding: 25px 20px;
+    }
+}

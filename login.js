@@ -1,350 +1,145 @@
 
-/* =========================================
-   SERVICEGROW LOGIN SYSTEM
-   Business Owner / Customer / Admin
-========================================= */
+document.addEventListener("DOMContentLoaded", () => {
+    const popup = document.getElementById("loginPopup");
+    const closeButton = document.getElementById("closeLoginPopup");
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("loginMessage");
+    const submitButton = document.getElementById("loginButton");
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
 
-const API_URL = "http://localhost:5000/api/auth/login";
+    if (!popup || !form) return;
 
-// =========================================
-// ELEMENTS
-// =========================================
+    let previousFocus = null;
 
-const loginForm = document.getElementById("loginForm");
-
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-
-const loginButton = document.getElementById("loginButton");
-const loginMessage = document.getElementById("loginMessage");
-
-const togglePassword = document.getElementById("togglePassword");
-
-const rememberMe = document.getElementById("rememberMe");
-
-const accountTypeInput = document.getElementById("accountType");
-
-const businessOption = document.getElementById("businessOption");
-const customerOption = document.getElementById("customerOption");
-
-const accountTypeRadios = document.querySelectorAll(
-    'input[name="accountType"]'
-);
-
-// =========================================
-// CURRENT YEAR
-// =========================================
-
-const yearElement = document.getElementById("loginYear");
-
-if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
-}
-
-// =========================================
-// ACCOUNT TYPE SELECTION
-// =========================================
-
-function updateAccountType() {
-
-    const selectedRadio = document.querySelector(
-        'input[name="accountType"]:checked'
-    );
-
-    if (!selectedRadio) return;
-
-    const selectedRole = selectedRadio.value;
-
-    // Update hidden input
-    if (accountTypeInput) {
-        accountTypeInput.value = selectedRole;
+    function openPopup() {
+        previousFocus = document.activeElement;
+        popup.hidden = false;
+        document.body.style.overflow = "hidden";
+        document.getElementById("email").focus();
     }
 
-    // Update selected card
-    businessOption?.classList.toggle(
-        "selected",
-        selectedRole === "business_owner"
-    );
-
-    customerOption?.classList.toggle(
-        "selected",
-        selectedRole === "customer"
-    );
-
-    // Update login button text
-    if (loginButton) {
-        loginButton.innerHTML = "Sign In <span>→</span>";
+    function closePopup() {
+        popup.hidden = true;
+        document.body.style.overflow = "";
+        message.textContent = "";
+        previousFocus?.focus();
     }
 
-    clearMessage();
-}
-
-accountTypeRadios.forEach(radio => {
-
-    radio.addEventListener("change", updateAccountType);
-
-});
-
-// Set initial selected option
-updateAccountType();
-
-// =========================================
-// SHOW / HIDE PASSWORD
-// =========================================
-
-if (togglePassword && passwordInput) {
-
-    togglePassword.addEventListener("click", () => {
-
-        const isPassword =
-            passwordInput.type === "password";
-
-        passwordInput.type =
-            isPassword ? "text" : "password";
-
-        togglePassword.textContent =
-            isPassword ? "Hide" : "Show";
-
-        togglePassword.setAttribute(
-            "aria-label",
-            isPassword ? "Hide password" : "Show password"
-        );
-
+    document.querySelectorAll("[data-open-login]").forEach(button => {
+        button.addEventListener("click", event => {
+            event.preventDefault();
+            openPopup();
+        });
     });
 
-}
+    closeButton.addEventListener("click", closePopup);
 
-// =========================================
-// MESSAGE FUNCTION
-// =========================================
+    popup.addEventListener("click", event => {
+        if (event.target === popup) closePopup();
+    });
 
-function showMessage(message, type = "error") {
+    document.addEventListener("keydown", event => {
+        if (popup.hidden) return;
 
-    if (!loginMessage) return;
+        if (event.key === "Escape") {
+            closePopup();
+        }
 
-    loginMessage.textContent = message;
+        if (event.key === "Tab") {
+            const focusable = [...popup.querySelectorAll(
+                'a[href], button:not([disabled]), input:not([disabled])'
+            )];
 
-    loginMessage.style.color =
-        type === "success" ? "#36c995" : "#ff8585";
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
 
-}
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey &&
+                       document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        }
+    });
 
-function clearMessage() {
+    togglePassword.addEventListener("click", () => {
+        const visible = passwordInput.type === "password";
+        passwordInput.type = visible ? "text" : "password";
+        togglePassword.textContent = visible ? "Hide" : "Show";
+    });
 
-    if (loginMessage) {
-        loginMessage.textContent = "";
-    }
+    document.getElementById("forgotPassword")
+        .addEventListener("click", event => {
+            event.preventDefault();
+            message.style.color = "#ffb06d";
+            message.textContent =
+                "Password reset will be available after backend setup.";
+        });
 
-}
-
-// =========================================
-// LOGIN FORM SUBMISSION
-// =========================================
-
-if (loginForm) {
-
-    loginForm.addEventListener("submit", async (event) => {
-
+    form.addEventListener("submit", async event => {
         event.preventDefault();
 
-        const email = emailInput.value.trim().toLowerCase();
-
+        const email = document.getElementById("email").value.trim();
         const password = passwordInput.value;
+        const remember = document.getElementById("rememberMe").checked;
 
-        const selectedRole =
-            document.querySelector(
-                'input[name="accountType"]:checked'
-            )?.value;
-
-        // =====================================
-        // VALIDATION
-        // =====================================
-
-        if (!email || !password) {
-
-            showMessage("Please enter your email and password.");
-            return;
-
-        }
-
-        if (!selectedRole) {
-
-            showMessage("Please select your account type.");
-            return;
-
-        }
-
-        if (!["business_owner", "customer"].includes(selectedRole)) {
-
-            showMessage("Invalid account type selected.");
-            return;
-
-        }
-
-        // =====================================
-        // LOADING
-        // =====================================
-
-        loginButton.disabled = true;
-        loginButton.textContent = "Signing In...";
-
-        showMessage("Checking your account...", "success");
+        message.textContent = "";
+        submitButton.disabled = true;
+        submitButton.textContent = "Signing in...";
 
         try {
+            const response = await fetch(
+                "http://localhost:5000/api/auth/login",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                }
+            );
 
-            // =================================
-            // SEND LOGIN REQUEST
-            // =================================
-
-            const response = await fetch(API_URL, {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    email,
-                    password,
-                    role: selectedRole
-                })
-
-            });
-
-            const result = await response.json();
-
-            // =================================
-            // HANDLE LOGIN ERROR
-            // =================================
+            const data = await response.json();
 
             if (!response.ok) {
-
-                throw new Error(
-                    result.message || "Invalid email or password."
-                );
-
+                throw new Error(data.message || "Login failed.");
             }
 
-            // =================================
-            // VERIFY RESPONSE
-            // =================================
-
-            if (!result.token || !result.user) {
-
-                throw new Error(
-                    "Invalid server response. Please contact support."
-                );
-
+            if (!data.token || !data.user) {
+                throw new Error("Invalid server response.");
             }
 
-            const user = result.user;
+            const role = data.user.role;
 
-            // Server-confirmed role must match selected account type
-            if (user.role !== selectedRole) {
-
-                throw new Error(
-                    "This account does not match the selected account type."
-                );
-
+            if (role !== "admin" && role !== "business_owner") {
+                throw new Error("This account cannot access the dashboard.");
             }
 
-            const allowedRoles = [
-                "admin",
-                "business_owner",
-                "customer"
-            ];
-
-            if (!allowedRoles.includes(user.role)) {
-
-                throw new Error("This account does not have dashboard access.");
-
-            }
-
-            // =================================
-            // SAVE LOGIN SESSION
-            // =================================
-
-            // Clear old sessions first
             localStorage.removeItem("token");
             localStorage.removeItem("user");
-
             sessionStorage.removeItem("token");
             sessionStorage.removeItem("user");
 
-            const storage = rememberMe.checked
-                ? localStorage
-                : sessionStorage;
+            const storage = remember ? localStorage : sessionStorage;
 
-            storage.setItem("token", result.token);
+            storage.setItem("token", data.token);
+            storage.setItem("user", JSON.stringify(data.user));
 
-            storage.setItem(
-                "user",
-                JSON.stringify(user)
-            );
-
-            // =================================
-            // SUCCESS MESSAGE
-            // =================================
-
-            showMessage(
-                "Login successful! Redirecting...",
-                "success"
-            );
-
-            // =================================
-            // ROLE-BASED REDIRECTION
-            // =================================
-
-            const dashboardRoutes = {
-                admin: "admin-dashboard.html",
-                business_owner: "business-dashboard.html",
-                customer: "customer-dashboard.html"
-            };
-
-            const destination = dashboardRoutes[user.role];
-
-            setTimeout(() => {
-
-                window.location.href = destination;
-
-            }, 800);
+            window.location.href =
+                role === "admin"
+                    ? "admin-dashboard.html"
+                    : "business-dashboard.html";
 
         } catch (error) {
-
-            console.error("Login Error:", error);
-
-            showMessage(
-                error.message || "Unable to connect to the server."
-            );
-
+            message.style.color = "#f87171";
+            message.textContent =
+                error.message || "Unable to sign in.";
         } finally {
-
-            loginButton.disabled = false;
-            loginButton.innerHTML = 'Sign In <span>→</span>';
-
+            submitButton.disabled = false;
+            submitButton.textContent = "Sign In →";
         }
-
     });
-
-}
-
-// =========================================
-// FORGOT PASSWORD
-// =========================================
-
-const forgotPassword = document.getElementById("forgotPassword");
-
-if (forgotPassword) {
-
-    forgotPassword.addEventListener("click", (event) => {
-
-        event.preventDefault();
-
-        showMessage(
-            "Password recovery will be available after backend setup."
-        );
-
-    });
-
-}
+});

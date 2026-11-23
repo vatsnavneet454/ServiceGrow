@@ -3,36 +3,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Login | ServiceGrow</title>
 
     <link rel="stylesheet" href="login.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 </head>
 
 <body>
 
+    <!-- BACKGROUND ANIMATIONS -->
     <div class="login-background">
         <div class="background-glow glow-one"></div>
         <div class="background-glow glow-two"></div>
     </div>
 
+
     <!-- NAVBAR -->
     <header class="login-navbar">
 
         <a href="index.html" class="logo">
+
             <span class="logo-mark">
                 <span class="logo-bar bar-one"></span>
                 <span class="logo-bar bar-two"></span>
                 <span class="logo-bar bar-three"></span>
             </span>
 
-            <span>service<span class="orange-text">grow</span></span>
+            <span>
+                service<span class="orange-text">grow</span>
+            </span>
+
         </a>
 
         <a href="index.html" class="back-home">
@@ -48,42 +62,67 @@
         <!-- LEFT SECTION -->
         <section class="login-left">
 
-            <span class="login-tag">WELCOME TO SERVICEGROW</span>
+            <span class="login-tag">
+                WELCOME TO SERVICEGROW
+            </span>
 
             <h1>
                 Grow Your Business.
-                <span class="orange-text">Build Better Relationships.</span>
+                <span class="orange-text">
+                    Build Better Relationships.
+                </span>
             </h1>
 
             <p>
-                Manage your business, customer follow-ups and feedback
-                through one simple platform.
+                Manage your business, customer follow-ups
+                and feedback through one simple platform.
             </p>
+
 
             <div class="login-features">
 
                 <div class="login-feature">
+
                     <span>✓</span>
+
                     <div>
                         <strong>Customer Management</strong>
-                        <small>Keep your customer information organised.</small>
+
+                        <small>
+                            Keep your customer information organised.
+                        </small>
                     </div>
+
                 </div>
 
+
                 <div class="login-feature">
+
                     <span>✓</span>
+
                     <div>
                         <strong>Review Management</strong>
-                        <small>Monitor customer feedback and reviews.</small>
+
+                        <small>
+                            Monitor customer feedback and reviews.
+                        </small>
                     </div>
+
                 </div>
 
+
                 <div class="login-feature">
+
                     <span>✓</span>
+
                     <div>
                         <strong>Business Growth</strong>
-                        <small>Understand your customer engagement.</small>
+
+                        <small>
+                            Understand your customer engagement.
+                        </small>
                     </div>
+
                 </div>
 
             </div>
@@ -98,63 +137,15 @@
 
                 <div class="login-card-heading">
 
-                    <div class="login-icon">↗</div>
+                    <div class="login-icon">
+                        ↗
+                    </div>
 
                     <h2>Welcome Back!</h2>
 
-                    <p>Sign in to your ServiceGrow account.</p>
-
-                </div>
-
-
-                <!-- ACCOUNT TYPE SELECTION -->
-                <div class="account-type-section">
-
-                    <label class="account-type-label">
-                        Select Account Type
-                    </label>
-
-                    <div class="account-type-options">
-
-                        <label class="account-type-option selected" id="businessOption">
-
-                            <input
-                                type="radio"
-                                name="accountType"
-                                id="businessOwner"
-                                value="business_owner"
-                                checked
-                            >
-
-                            <span class="account-type-icon">▣</span>
-
-                            <span class="account-type-text">
-                                <strong>Business Owner</strong>
-                                <small>Manage your business</small>
-                            </span>
-
-                        </label>
-
-
-                        <label class="account-type-option" id="customerOption">
-
-                            <input
-                                type="radio"
-                                name="accountType"
-                                id="customer"
-                                value="customer"
-                            >
-
-                            <span class="account-type-icon">♙</span>
-
-                            <span class="account-type-text">
-                                <strong>Customer</strong>
-                                <small>Access your account</small>
-                            </span>
-
-                        </label>
-
-                    </div>
+                    <p>
+                        Sign in to your ServiceGrow account.
+                    </p>
 
                 </div>
 
@@ -162,16 +153,12 @@
                 <!-- LOGIN FORM -->
                 <form id="loginForm">
 
-                    <input
-                        type="hidden"
-                        id="accountType"
-                        name="role"
-                        value="business_owner"
-                    >
-
+                    <!-- EMAIL -->
                     <div class="form-group">
 
-                        <label for="email">Email Address</label>
+                        <label for="email">
+                            Email Address
+                        </label>
 
                         <input
                             type="email"
@@ -185,9 +172,12 @@
                     </div>
 
 
+                    <!-- PASSWORD -->
                     <div class="form-group">
 
-                        <label for="password">Password</label>
+                        <label for="password">
+                            Password
+                        </label>
 
                         <div class="password-wrapper">
 
@@ -205,6 +195,7 @@
                                 id="togglePassword"
                                 class="toggle-password"
                                 aria-label="Show password"
+                                aria-pressed="false"
                             >
                                 Show
                             </button>
@@ -214,11 +205,18 @@
                     </div>
 
 
+                    <!-- REMEMBER / FORGOT -->
                     <div class="login-options">
 
                         <label class="remember-option">
-                            <input type="checkbox" id="rememberMe">
+
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                            >
+
                             <span>Remember me</span>
+
                         </label>
 
                         <a href="#" id="forgotPassword">
@@ -228,27 +226,48 @@
                     </div>
 
 
-                    <button type="submit" class="login-submit" id="loginButton">
-                        Sign In <span>→</span>
+                    <!-- SUBMIT -->
+                    <button
+                        type="submit"
+                        class="login-submit"
+                        id="loginButton"
+                    >
+                        Sign In
+                        <span>→</span>
                     </button>
 
-                    <p id="loginMessage" class="login-message" aria-live="polite"></p>
+
+                    <!-- ERROR / SUCCESS MESSAGE -->
+                    <p
+                        id="loginMessage"
+                        class="login-message"
+                        aria-live="polite"
+                    ></p>
 
                 </form>
 
 
+                <!-- DIVIDER -->
                 <div class="login-divider">
                     <span>SECURE ACCOUNT ACCESS</span>
                 </div>
 
 
+                <!-- REGISTER -->
                 <p class="login-footer">
-                    Don't have an account?
-                    <a href="register.html">Create an account</a>
+
+                    New to ServiceGrow?
+
+                    <a href="register.html">
+                        Register Your Business
+                    </a>
+
                 </p>
 
+
+                <!-- SECURITY -->
                 <p class="login-security">
-                    🔒 Your account information is protected.
+                    🔒 Secure access for authorised ServiceGrow accounts.
                 </p>
 
             </div>
@@ -260,7 +279,12 @@
 
     <!-- FOOTER -->
     <footer class="login-bottom">
-        <p>© <span id="loginYear"></span> ServiceGrow. All rights reserved.</p>
+
+        <p>
+            © <span id="loginYear"></span>
+            ServiceGrow. All rights reserved.
+        </p>
+
     </footer>
 
 
